@@ -1,5 +1,11 @@
 import { RouterView } from "~/app/RouterView"
+import { AppProviders } from "~/app/providers/AppProviders"
 
 export function App() {
-	return <RouterView />
+	return (
+		<AppProviders>
+			{" "}
+			<RouterView />
+		</AppProviders>
+	)
 }
