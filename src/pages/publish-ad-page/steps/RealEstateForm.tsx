@@ -38,7 +38,7 @@ export function RealEstateForm(props: RealEstateFormProps) {
 					control={control}
 					render={({ field: { value, onChange, ...rest } }) => (
 						<Select
-							label={"Тип недвижимости"}
+							label={"Тип недвижимости:"}
 							placeholder={"Выберите тип недвижимости"}
 							options={REAL_ESTATE_TYPE_OPTIONS}
 							invalid={Boolean(errors.propertyType)}
@@ -52,18 +52,18 @@ export function RealEstateForm(props: RealEstateFormProps) {
 					)}
 					name={"propertyType"}
 				/>
-				<Field label={"Площадь:"} errorText={errors.area?.message}>
-					<NumberInputRoot min={1}>
+				<Field label={"Площадь:"} helperText={"кв. м."} errorText={errors.area?.message}>
+					<NumberInputRoot>
 						<NumberInputField {...register("area")} />
 					</NumberInputRoot>
 				</Field>
 				<Field label={"Количество комнат:"} errorText={errors.rooms?.message}>
-					<NumberInputRoot min={1}>
+					<NumberInputRoot>
 						<NumberInputField {...register("rooms")} />
 					</NumberInputRoot>
 				</Field>
 				<Field label={"Цена:"} errorText={errors.price?.message}>
-					<NumberInputRoot min={1}>
+					<NumberInputRoot>
 						<NumberInputField {...register("price")} />
 					</NumberInputRoot>
 				</Field>

@@ -15,8 +15,8 @@ type AutoFormProps = {
 const autoDefaultValue: AutoFormType = {
 	brand: [CAR_BRAND.MERCEDES],
 	model: "",
-	year: new Date().getFullYear(), // Default to the current year
-	mileage: undefined,
+	year: new Date().getFullYear(),
+	mileage: 0,
 }
 
 export function AutoForm(props: AutoFormProps) {
@@ -34,14 +34,11 @@ export function AutoForm(props: AutoFormProps) {
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<Stack direction={"column"} gap={"1rem"} justify={"center"}>
-				<Field label={"Марка:"} errorText={errors.brand?.message}>
-					<Input {...register("brand")} placeholder="Введите марку..." />
-				</Field>
 				<Controller
 					control={control}
 					render={({ field: { value, onChange, ...rest } }) => (
 						<Select
-							label={"Марка"}
+							label={"Марка:"}
 							placeholder={"Выберите марку автомобиля"}
 							options={CAR_BRAND_OPTIONS}
 							invalid={Boolean(errors.brand)}
@@ -59,12 +56,12 @@ export function AutoForm(props: AutoFormProps) {
 					<Input {...register("model")} placeholder="Введите модель..." />
 				</Field>
 				<Field label={"Год выпуска:"} errorText={errors.year?.message}>
-					<NumberInputRoot min={1886}>
+					<NumberInputRoot>
 						<NumberInputField {...register("year")} />
 					</NumberInputRoot>
 				</Field>
-				<Field label={"Пробег:"} errorText={errors.mileage?.message}>
-					<NumberInputRoot min={1886}>
+				<Field label={"Пробег:"} helperText={"км."} errorText={errors.mileage?.message}>
+					<NumberInputRoot>
 						<NumberInputField {...register("mileage")} />
 					</NumberInputRoot>
 				</Field>

@@ -52,13 +52,13 @@ export function ServicesForm(props: ServicesFormProps) {
 					)}
 					name={"serviceType"}
 				/>
-				<Field label={"Опыт работы:"} errorText={errors.experience?.message}>
-					<NumberInputRoot min={1}>
+				<Field label={"Опыт работы:"} helperText={"Полное количество лет"} errorText={errors.experience?.message}>
+					<NumberInputRoot>
 						<NumberInputField {...register("experience")} />
 					</NumberInputRoot>
 				</Field>
 				<Field label={"Стоимость:"} errorText={errors.cost?.message}>
-					<NumberInputRoot min={1}>
+					<NumberInputRoot>
 						<NumberInputField {...register("cost")} />
 					</NumberInputRoot>
 				</Field>

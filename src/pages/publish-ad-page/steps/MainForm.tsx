@@ -1,6 +1,6 @@
 import { Controller, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Button, Input, Stack } from "@chakra-ui/react"
+import { Button, Input, Stack, Textarea } from "@chakra-ui/react"
 
 import { Field } from "~/components/ui/field"
 import { FileUpload, Select } from "~/shared/ui"
@@ -34,14 +34,32 @@ export function MainStepForm(props: MainStepFormProps) {
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<Stack direction={"column"} gap={"1rem"} justify={"center"}>
+				<Controller
+					control={control}
+					render={({ field: { value, onChange, ...rest } }) => (
+						<Select
+							label={"Категория:"}
+							placeholder={"Выберите категорию"}
+							options={AD_CATEGORY_OPTIONS}
+							invalid={Boolean(errors.category)}
+							value={value}
+							onValueChange={({ value }) => {
+								onChange(value)
+							}}
+							{...rest}
+							width="320px"
+						/>
+					)}
+					name={"category"}
+				/>
 				<Field label={"Название:"} errorText={errors.title?.message}>
 					<Input {...register("title")} placeholder="Введите название..." />
 				</Field>
-				<Field label={"Описание:"} errorText={errors.description?.message}>
-					<Input {...register("description")} placeholder="Введите описание..." />
-				</Field>
 				<Field label={"Локация:"} errorText={errors.location?.message}>
 					<Input {...register("location")} placeholder="Введите локацию..." />
+				</Field>
+				<Field label={"Описание:"} errorText={errors.description?.message}>
+					<Textarea rows={6} {...register("description")} placeholder="Введите описание..." />
 				</Field>
 				<Controller
 					control={control}
@@ -64,26 +82,8 @@ export function MainStepForm(props: MainStepFormProps) {
 					)}
 					name={"image"}
 				/>
-				<Controller
-					control={control}
-					render={({ field: { value, onChange, ...rest } }) => (
-						<Select
-							label={"Категория:"}
-							placeholder={"Выберите категорию"}
-							options={AD_CATEGORY_OPTIONS}
-							invalid={Boolean(errors.category)}
-							value={value}
-							onValueChange={({ value }) => {
-								onChange(value)
-							}}
-							{...rest}
-							width="320px"
-						/>
-					)}
-					name={"category"}
-				/>
 			</Stack>
-			<Button mt={"1rem"} mx={"auto"} type="submit">
+			<Button mt={"2rem"} mx={"auto"} type="submit">
 				Вперед
 			</Button>
 		</form>

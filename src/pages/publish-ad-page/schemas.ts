@@ -23,8 +23,8 @@ export type MainStepFormType = z.infer<typeof mainStepSchema>
 export const autoSchema = z.object({
 	brand: z.nativeEnum(CAR_BRAND).array(),
 	model: z.string().min(1, "Модель обязательна"),
-	year: z.number().min(1886, "Год выпуска обязателен"),
-	mileage: z.number().optional(),
+	year: z.coerce.number({ message: "Обязательное поле" }).min(1886, "Минимальное значение - 1886"),
+	mileage: z.coerce.number().min(0, "Поле не может быть меньше 0"),
 })
 
 /**
@@ -37,9 +37,9 @@ export type AutoFormType = z.infer<typeof autoSchema>
  */
 export const realEstateSchema = z.object({
 	propertyType: z.nativeEnum(REAL_ESTATE_TYPE).array(),
-	area: z.number().min(1, "Площадь обязательна"),
-	rooms: z.number().min(1, "Количество комнат обязательно"),
-	price: z.number().min(1, "Цена обязательна"),
+	area: z.coerce.number().min(1, "Площадь обязательна"),
+	rooms: z.coerce.number().min(1, "Количество комнат обязательно"),
+	price: z.coerce.number().min(1, "Цена обязательна"),
 })
 
 /**
@@ -52,8 +52,8 @@ export type RealEstateFormType = z.infer<typeof realEstateSchema>
  */
 export const servicesSchema = z.object({
 	serviceType: z.nativeEnum(SERVICE_TYPE).array(),
-	experience: z.number().min(1, "Опыт работы обязателен"),
-	cost: z.number().min(1, "Стоимость обязательна"),
+	experience: z.coerce.number().min(1, "Опыт работы обязателен"),
+	cost: z.coerce.number().min(1, "Стоимость обязательна"),
 	schedule: z.string().optional(),
 })
 
