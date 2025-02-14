@@ -1,1 +1,1 @@
-export * from "./PublishAdPage"
+export * from "./PublishAdPage.tsx"

@@ -1,2 +1,2 @@
-export * from "./utils"
-export * from "./getSelectOptions"
+export * from "./utils.ts"
+export * from "./getSelectOptions.ts"

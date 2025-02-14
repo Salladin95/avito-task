@@ -1,13 +1,13 @@
 import { createContext, ReactNode, useContext, useState } from "react"
 
-import { MainStepFormType, SecondStepFormType } from "~/pages/publish-ad-page/schemas"
+import { MainStepFormType, PublishAdSecondStepFormType } from "~/pages/publish-ad-page/schemas.ts"
 
 // Context Type
 type FormContextType = {
 	mainStepData: MainStepFormType | null
-	secondStepData: SecondStepFormType | null
+	secondStepData: PublishAdSecondStepFormType | null
 	setMainStep: (data: MainStepFormType) => void
-	setSecondStep: (data: SecondStepFormType) => void
+	setSecondStep: (data: PublishAdSecondStepFormType) => void
 	resetForm: () => void
 }
 
@@ -29,7 +29,7 @@ type FormProviderProps = {
 
 export const PublishAdFormProvider = ({ children }: FormProviderProps) => {
 	const [mainStep, setMainStep] = useState<MainStepFormType | null>(null)
-	const [secondStep, setSecondStep] = useState<SecondStepFormType | null>(null)
+	const [secondStep, setSecondStep] = useState<PublishAdSecondStepFormType | null>(null)
 
 	function resetForm() {
 		setMainStep(null)

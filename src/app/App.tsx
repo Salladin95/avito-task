@@ -1,5 +1,5 @@
-import { RouterView } from "~/app/RouterView"
-import { AppProviders } from "~/app/providers/AppProviders"
+import { RouterView } from "~/app/RouterView.tsx"
+import { AppProviders } from "~/app/providers/AppProviders.tsx"
 
 export function App() {
 	return (

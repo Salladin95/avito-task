@@ -1,2 +1,2 @@
-export * from "./App"
-export * from "./RouterView"
+export * from "./App.tsx"
+export * from "./RouterView.tsx"

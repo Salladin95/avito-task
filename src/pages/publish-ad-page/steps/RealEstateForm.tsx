@@ -2,11 +2,11 @@ import { Button, Stack } from "@chakra-ui/react"
 import { Controller, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
-import { Select } from "~/shared/ui/Select"
-import { Field } from "~/components/ui/field"
-import { REAL_ESTATE_TYPE, REAL_ESTATE_TYPE_OPTIONS } from "~/app/constants"
-import { NumberInputField, NumberInputRoot } from "~/components/ui/number-input"
-import { realEstateSchema, type RealEstateFormType } from "~/pages/publish-ad-page/schemas"
+import { Select } from "~/shared/ui/Select.tsx"
+import { Field } from "~/components/ui/field.tsx"
+import { REAL_ESTATE_TYPE, REAL_ESTATE_TYPE_OPTIONS } from "~/shared/constants/constants.ts"
+import { NumberInputField, NumberInputRoot } from "~/components/ui/number-input.tsx"
+import { realEstateSchema, type RealEstateFormType } from "~/pages/publish-ad-page/schemas.ts"
 
 type RealEstateFormProps = {
 	onSubmit: (data: RealEstateFormType) => void

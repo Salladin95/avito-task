@@ -2,21 +2,21 @@ import { Controller, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, Input, Stack, Textarea } from "@chakra-ui/react"
 
-import { Field } from "~/components/ui/field"
+import { Field } from "~/components/ui/field.tsx"
 import { FileUpload, Select } from "~/shared/ui"
-import { AD_CATEGORY, AD_CATEGORY_OPTIONS } from "~/app/constants"
-import { isCorrectType, isFileTooLarge } from "~/pages/publish-ad-page/utils"
-import { mainStepSchema, type MainStepFormType } from "~/pages/publish-ad-page/schemas"
+import { AD_CATEGORY, AD_CATEGORY_OPTIONS } from "~/shared/constants/constants.ts"
+import { isCorrectType, isFileTooLarge } from "~/pages/publish-ad-page/utils.ts"
+import { mainStepSchema, type MainStepFormType } from "~/pages/publish-ad-page/schemas.ts"
 
 type MainStepFormProps = {
 	onSubmit: (data: MainStepFormType) => void
 }
 
 const mainStepDefaultValue: MainStepFormType = {
-	category: [AD_CATEGORY.REAL_ESTATE],
+	type: [AD_CATEGORY.REAL_ESTATE],
 	description: "",
 	location: "",
-	title: "",
+	name: "",
 }
 
 export function MainStepForm(props: MainStepFormProps) {
@@ -41,7 +41,7 @@ export function MainStepForm(props: MainStepFormProps) {
 							label={"Категория:"}
 							placeholder={"Выберите категорию"}
 							options={AD_CATEGORY_OPTIONS}
-							invalid={Boolean(errors.category)}
+							invalid={Boolean(errors.type)}
 							value={value}
 							onValueChange={({ value }) => {
 								onChange(value)
@@ -50,10 +50,10 @@ export function MainStepForm(props: MainStepFormProps) {
 							width="320px"
 						/>
 					)}
-					name={"category"}
+					name={"type"}
 				/>
-				<Field label={"Название:"} errorText={errors.title?.message}>
-					<Input {...register("title")} placeholder="Введите название..." />
+				<Field label={"Название:"} errorText={errors.name?.message}>
+					<Input {...register("name")} placeholder="Введите название..." />
 				</Field>
 				<Field label={"Локация:"} errorText={errors.location?.message}>
 					<Input {...register("location")} placeholder="Введите локацию..." />

@@ -3,10 +3,10 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, Input, Stack } from "@chakra-ui/react"
 
 import { Select } from "~/shared/ui"
-import { Field } from "~/components/ui/field"
-import { SERVICE_TYPE, SERVICE_TYPE_OPTIONS } from "~/app/constants"
-import { NumberInputField, NumberInputRoot } from "~/components/ui/number-input"
-import { servicesSchema, type ServicesFormType } from "~/pages/publish-ad-page/schemas"
+import { Field } from "~/components/ui/field.tsx"
+import { SERVICE_TYPE, SERVICE_TYPE_OPTIONS } from "~/shared/constants/constants.ts"
+import { NumberInputField, NumberInputRoot } from "~/components/ui/number-input.tsx"
+import { servicesSchema, type ServicesFormType } from "~/pages/publish-ad-page/schemas.ts"
 
 type ServicesFormProps = {
 	onSubmit: (data: ServicesFormType) => void

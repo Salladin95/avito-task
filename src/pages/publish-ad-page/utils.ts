@@ -1,4 +1,4 @@
-import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "~/app/constants.ts"
+import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "~/shared/constants/constants"
 
 /**
  * Checks if the given file is too large.

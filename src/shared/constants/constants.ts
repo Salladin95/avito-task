@@ -19,9 +19,9 @@ export const MAX_FILE_SIZE = mbToBytes(5)
 export const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"]
 
 export const AD_CATEGORY = {
-	REAL_ESTATE: "REAL_ESTATE",
-	AUTO: "AUTO",
-	SERVICES: "SERVICES",
+	REAL_ESTATE: "Недвижимость",
+	AUTO: "Авто",
+	SERVICES: "Услуги",
 } as const
 export type AdCategoryType = (typeof AD_CATEGORY)[keyof typeof AD_CATEGORY]
 

@@ -1,15 +1,15 @@
 import * as z from "zod"
-import { AD_CATEGORY, CAR_BRAND, REAL_ESTATE_TYPE, SERVICE_TYPE } from "~/app/constants"
+import { AD_CATEGORY, CAR_BRAND, REAL_ESTATE_TYPE, SERVICE_TYPE } from "~/shared/constants/constants.ts"
 
 /**
  * Schema for the main step of the form.
  */
 export const mainStepSchema = z.object({
-	title: z.string().min(1, "Название обязательно"),
+	name: z.string().min(1, "Название обязательно"),
 	description: z.string().min(1, "Описание обязательно"),
 	location: z.string().min(1, "Локация обязательна"),
 	image: z.any().optional(),
-	category: z.nativeEnum(AD_CATEGORY).array(),
+	type: z.nativeEnum(AD_CATEGORY).array(),
 })
 
 /**
@@ -18,7 +18,7 @@ export const mainStepSchema = z.object({
 export type MainStepFormType = z.infer<typeof mainStepSchema>
 
 /**
- * Schema for the auto category step.
+ * Schema for the auto type step.
  */
 export const autoSchema = z.object({
 	brand: z.nativeEnum(CAR_BRAND).array(),
@@ -33,7 +33,7 @@ export const autoSchema = z.object({
 export type AutoFormType = z.infer<typeof autoSchema>
 
 /**
- * Schema for the real estate category step.
+ * Schema for the real estate type step.
  */
 export const realEstateSchema = z.object({
 	propertyType: z.nativeEnum(REAL_ESTATE_TYPE).array(),
@@ -48,7 +48,7 @@ export const realEstateSchema = z.object({
 export type RealEstateFormType = z.infer<typeof realEstateSchema>
 
 /**
- * Schema for the services category step.
+ * Schema for the services type step.
  */
 export const servicesSchema = z.object({
 	serviceType: z.nativeEnum(SERVICE_TYPE).array(),
@@ -62,27 +62,27 @@ export const servicesSchema = z.object({
  */
 export type ServicesFormType = z.infer<typeof servicesSchema>
 
-export type SecondStepFormType =
+export type PublishAdSecondStepFormType =
 	| {
-			category: "REAL_ESTATE"
+			type: typeof AD_CATEGORY.REAL_ESTATE
 			propertyType: string
 			area: number
 			rooms: number
 			price: number
 	  }
 	| {
-			category: "AUTO"
+			type: typeof AD_CATEGORY.AUTO
 			brand: string
 			model: string
 			year: number
 			mileage?: number
 	  }
 	| {
-			category: "SERVICES"
+			type: typeof AD_CATEGORY.SERVICES
 			serviceType: string
 			experience: number
 			cost: number
 			schedule?: string
 	  }
 
-export type FullFormType = Omit<MainStepFormType, "category"> & SecondStepFormType
+export type FullPublishAdFormType = Omit<MainStepFormType, "type"> & PublishAdSecondStepFormType

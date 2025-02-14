@@ -3,10 +3,10 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, Input, Stack } from "@chakra-ui/react"
 
 import { Select } from "~/shared/ui"
-import { Field } from "~/components/ui/field"
-import { CAR_BRAND, CAR_BRAND_OPTIONS } from "~/app/constants.ts"
-import { autoSchema, type AutoFormType } from "~/pages/publish-ad-page/schemas"
-import { NumberInputField, NumberInputRoot } from "~/components/ui/number-input"
+import { Field } from "~/components/ui/field.tsx"
+import { CAR_BRAND, CAR_BRAND_OPTIONS } from "~/shared/constants/constants.ts"
+import { autoSchema, type AutoFormType } from "~/pages/publish-ad-page/schemas.ts"
+import { NumberInputField, NumberInputRoot } from "~/components/ui/number-input.tsx"
 
 type AutoFormProps = {
 	onSubmit: (data: AutoFormType) => void

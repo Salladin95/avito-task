@@ -1,2 +1,2 @@
-export * from "./Select"
-export * from "./FileUpload"
+export * from "./Select.tsx"
+export * from "./FileUpload.tsx"
