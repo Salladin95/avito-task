@@ -1,7 +1,9 @@
 import { ReactNode, useState } from "react"
 import { Container } from "@chakra-ui/react"
-import { toaster } from "~/components/ui/toaster"
+import { toaster, Toaster } from "~/components/ui/toaster"
+import { useQueryClient } from "@tanstack/react-query"
 
+import { ADS_QUERY_KEY } from "~/shared/api"
 import { useCreateAdMutation } from "~/pages/publish-ad-page/api"
 import { AD_CATEGORY, AdCategoryType } from "~/shared/constants/constants"
 import {
@@ -10,19 +12,33 @@ import {
 	type RealEstateFormType,
 	type PublishAdSecondStepFormType,
 	type ServicesFormType,
-} from "~/pages/publish-ad-page/schemas.ts"
+} from "~/pages/publish-ad-page/schemas"
 import { AutoForm, MainStepForm, RealEstateForm, ServicesForm } from "~/pages/publish-ad-page/steps"
+
+const TOAST_DURATION = 3000
 
 export function PublishAdPage() {
 	const [step, setStep] = useState<0 | 1>(0)
 	const [mainStepData, setMainStep] = useState<MainStepFormType | null>(null)
 	const type = mainStepData?.type.length ? mainStepData?.type[0] : null
+	const queryClient = useQueryClient()
 
 	const { mutate: createAd } = useCreateAdMutation({
 		onError: (err) => {
 			toaster.create({
 				title: "Failure",
 				description: err.message,
+				type: "error",
+				duration: TOAST_DURATION,
+			})
+		},
+		onSuccess: () => {
+			queryClient.refetchQueries({ queryKey: [ADS_QUERY_KEY] })
+			toaster.create({
+				title: "Success",
+				description: "Ваше объявление успешно создано!",
+				type: "success",
+				duration: TOAST_DURATION,
 			})
 		},
 	})
@@ -80,10 +96,9 @@ export function PublishAdPage() {
 	}
 
 	return (
-		<main>
-			<Container mx={"auto"} pt={"4rem"}>
-				{renderStepContent(step, type)}
-			</Container>
-		</main>
+		<Container as={"main"} mx={"auto"} pt={"4rem"}>
+			{renderStepContent(step, type)}
+			<Toaster />
+		</Container>
 	)
 }

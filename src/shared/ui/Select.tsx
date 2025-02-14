@@ -23,7 +23,7 @@ export function Select(props: SelectAdCategoryProps) {
 	})
 
 	return (
-		<SelectRoot collection={collection} {...rest} size="lg" width="320px">
+		<SelectRoot collection={collection} {...rest} size="lg" width={{ base: "290px", sm: "320px" }}>
 			<SelectLabel>{label}</SelectLabel>
 			<SelectTrigger>
 				<SelectValueText placeholder={placeholder} />

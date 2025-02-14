@@ -11,6 +11,7 @@ interface BaseAd {
 	description: string
 	location: string
 	type: string
+	image?: string
 }
 
 interface RealEstate extends BaseAd {

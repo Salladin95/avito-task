@@ -71,9 +71,23 @@ app.post('/items', (req, res) => {
   res.status(201).json(item);
 });
 
-// Получение всех объявлений
+// Получение всех объявлений с пагинацией
 app.get('/items', (req, res) => {
-  res.json(items);
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+
+  const startIndex = (page - 1) * limit;
+  const endIndex = startIndex + limit;
+
+  const paginatedItems = items.slice(startIndex, endIndex);
+
+  res.json({
+    page: page,
+    limit: limit,
+    totalItems: items.length,
+    totalPages: Math.ceil(items.length / limit),
+    items: paginatedItems
+  });
 });
 
 // Получение объявления по его id
