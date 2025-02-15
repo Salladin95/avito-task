@@ -4,12 +4,13 @@ import { Button, Input, Stack } from "@chakra-ui/react"
 
 import { Select } from "~/shared/ui"
 import { Field } from "~/components/ui/field.tsx"
-import { SERVICE_TYPE, SERVICE_TYPE_OPTIONS } from "~/shared/constants/constants.ts"
-import { NumberInputField, NumberInputRoot } from "~/components/ui/number-input.tsx"
-import { servicesSchema, type ServicesFormType } from "~/pages/publish-ad-page/schemas.ts"
+import { NumberInputField, NumberInputRoot } from "~/components/ui/number-input"
+import { SERVICE_TYPE, SERVICE_TYPE_OPTIONS } from "~/shared/constants/constants"
+import { servicesSchema, type ServicesFormType } from "~/pages/publish-ad-page/schemas"
 
 type ServicesFormProps = {
 	onSubmit: (data: ServicesFormType) => void
+	isSubmitting?: boolean
 }
 
 const servicesDefaultValue: ServicesFormType = {
@@ -20,7 +21,7 @@ const servicesDefaultValue: ServicesFormType = {
 }
 
 export function ServicesForm(props: ServicesFormProps) {
-	const { onSubmit } = props
+	const { onSubmit, isSubmitting } = props
 	const {
 		register,
 		handleSubmit,
@@ -66,7 +67,7 @@ export function ServicesForm(props: ServicesFormProps) {
 					<Input {...register("schedule")} placeholder="Введите расписание..." />
 				</Field>
 			</Stack>
-			<Button mt={"1rem"} mx={"auto"} type="submit">
+			<Button loading={isSubmitting} loadingText="Отправляем..." spinnerPlacement="start" mt={"1rem"} mx={"auto"} type="submit">
 				Вперед
 			</Button>
 		</form>

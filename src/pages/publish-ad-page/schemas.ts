@@ -1,5 +1,5 @@
 import * as z from "zod"
-import { AD_CATEGORY, CAR_BRAND, REAL_ESTATE_TYPE, SERVICE_TYPE } from "~/shared/constants/constants.ts"
+import { AD_TYPE, CAR_BRAND, REAL_ESTATE_TYPE, SERVICE_TYPE } from "~/shared/constants/constants.ts"
 
 /**
  * Schema for the main step of the form.
@@ -9,7 +9,7 @@ export const mainStepSchema = z.object({
 	description: z.string().min(1, "Описание обязательно"),
 	location: z.string().min(1, "Локация обязательна"),
 	image: z.any().optional(),
-	type: z.nativeEnum(AD_CATEGORY).array(),
+	type: z.nativeEnum(AD_TYPE).array(),
 })
 
 /**
@@ -64,21 +64,21 @@ export type ServicesFormType = z.infer<typeof servicesSchema>
 
 export type PublishAdSecondStepFormType =
 	| {
-			type: typeof AD_CATEGORY.REAL_ESTATE
+			type: typeof AD_TYPE.REAL_ESTATE
 			propertyType: string
 			area: number
 			rooms: number
 			price: number
 	  }
 	| {
-			type: typeof AD_CATEGORY.AUTO
+			type: typeof AD_TYPE.AUTO
 			brand: string
 			model: string
 			year: number
 			mileage?: number
 	  }
 	| {
-			type: typeof AD_CATEGORY.SERVICES
+			type: typeof AD_TYPE.SERVICES
 			serviceType: string
 			experience: number
 			cost: number

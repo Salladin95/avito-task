@@ -1,4 +1,4 @@
-import { AD_CATEGORY, CarBrand, RealEstateType, ServiceType } from "~/shared/constants"
+import { AD_TYPE, CarBrand, RealEstateType, ServiceType } from "~/shared/constants"
 
 export type SelectOption = {
 	label: string
@@ -15,7 +15,7 @@ interface BaseAd {
 }
 
 interface RealEstate extends BaseAd {
-	type: typeof AD_CATEGORY.REAL_ESTATE
+	type: typeof AD_TYPE.REAL_ESTATE
 	propertyType: RealEstateType
 	area: number
 	rooms: number
@@ -23,7 +23,7 @@ interface RealEstate extends BaseAd {
 }
 
 interface Car extends BaseAd {
-	type: typeof AD_CATEGORY.AUTO
+	type: typeof AD_TYPE.AUTO
 	brand: CarBrand
 	year: number
 	mileage: number
@@ -31,7 +31,7 @@ interface Car extends BaseAd {
 }
 
 interface Service extends BaseAd {
-	type: typeof AD_CATEGORY.SERVICES
+	type: typeof AD_TYPE.SERVICES
 	serviceType: ServiceType
 	experience: number
 	cost: number

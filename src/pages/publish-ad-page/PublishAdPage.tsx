@@ -1,11 +1,11 @@
 import { ReactNode, useState } from "react"
-import { Container } from "@chakra-ui/react"
+import { Container, Heading } from "@chakra-ui/react"
 import { toaster, Toaster } from "~/components/ui/toaster"
 import { useQueryClient } from "@tanstack/react-query"
 
 import { ADS_QUERY_KEY } from "~/shared/api"
 import { useCreateAdMutation } from "~/pages/publish-ad-page/api"
-import { AD_CATEGORY, AdCategoryType } from "~/shared/constants/constants"
+import { AD_TYPE, AdCategoryType } from "~/shared/constants/constants"
 import {
 	type AutoFormType,
 	type MainStepFormType,
@@ -55,7 +55,7 @@ export function PublishAdPage() {
 
 	function onRealEstateFormSubmit(data: RealEstateFormType) {
 		handleSecondStepSubmit({
-			type: AD_CATEGORY.REAL_ESTATE,
+			type: AD_TYPE.REAL_ESTATE,
 			...data,
 			propertyType: data.propertyType[0],
 		})
@@ -63,7 +63,7 @@ export function PublishAdPage() {
 
 	function onAutoFormSubmit(data: AutoFormType) {
 		handleSecondStepSubmit({
-			type: AD_CATEGORY.AUTO,
+			type: AD_TYPE.AUTO,
 			...data,
 			brand: data.brand[0],
 		})
@@ -71,7 +71,7 @@ export function PublishAdPage() {
 
 	function onServicesFormSubmit(data: ServicesFormType) {
 		handleSecondStepSubmit({
-			type: AD_CATEGORY.SERVICES,
+			type: AD_TYPE.SERVICES,
 			...data,
 			serviceType: data.serviceType[0],
 		})
@@ -84,9 +84,9 @@ export function PublishAdPage() {
 
 		if (step === 1) {
 			const categoryMap: Record<AdCategoryType, ReactNode> = {
-				[AD_CATEGORY.REAL_ESTATE]: <RealEstateForm onSubmit={onRealEstateFormSubmit} />,
-				[AD_CATEGORY.AUTO]: <AutoForm onSubmit={onAutoFormSubmit} />,
-				[AD_CATEGORY.SERVICES]: <ServicesForm onSubmit={onServicesFormSubmit} />,
+				[AD_TYPE.REAL_ESTATE]: <RealEstateForm onSubmit={onRealEstateFormSubmit} />,
+				[AD_TYPE.AUTO]: <AutoForm onSubmit={onAutoFormSubmit} />,
+				[AD_TYPE.SERVICES]: <ServicesForm onSubmit={onServicesFormSubmit} />,
 			}
 
 			return categoryMap[type]
@@ -96,7 +96,8 @@ export function PublishAdPage() {
 	}
 
 	return (
-		<Container as={"main"} mx={"auto"} pt={"4rem"}>
+		<Container as={"main"} mx={"auto"} pt={"2rem"}>
+			<Heading fontSize={"3rem"} mb={"3rem"} textAlign={"center"} size="2xl">Создание объявления</Heading>
 			{renderStepContent(step, type)}
 			<Toaster />
 		</Container>

@@ -18,20 +18,20 @@ function mbToBytes(mb: number): number {
 export const MAX_FILE_SIZE = mbToBytes(5)
 export const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"]
 
-export const AD_CATEGORY = {
+export const AD_TYPE = {
 	REAL_ESTATE: "Недвижимость",
 	AUTO: "Авто",
 	SERVICES: "Услуги",
 } as const
-export type AdCategoryType = (typeof AD_CATEGORY)[keyof typeof AD_CATEGORY]
+export type AdCategoryType = (typeof AD_TYPE)[keyof typeof AD_TYPE]
 
-export const AD_CATEGORY_LABEL_MAP: Record<AdCategoryType, string> = {
-	[AD_CATEGORY.REAL_ESTATE]: "Недвижимость",
-	[AD_CATEGORY.AUTO]: "Авто",
-	[AD_CATEGORY.SERVICES]: "Услуги",
+export const AD_TYPE_LABEL_MAP: Record<AdCategoryType, string> = {
+	[AD_TYPE.REAL_ESTATE]: "Недвижимость",
+	[AD_TYPE.AUTO]: "Авто",
+	[AD_TYPE.SERVICES]: "Услуги",
 } as const
 
-export const AD_CATEGORY_OPTIONS = getSelectOptions(AD_CATEGORY, AD_CATEGORY_LABEL_MAP)
+export const AD_CATEGORY_OPTIONS = getSelectOptions(AD_TYPE, AD_TYPE_LABEL_MAP)
 
 export const REAL_ESTATE_TYPE = {
 	APARTMENT: "APARTMENT",

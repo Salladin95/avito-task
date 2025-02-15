@@ -4,12 +4,13 @@ import { zodResolver } from "@hookform/resolvers/zod"
 
 import { Select } from "~/shared/ui/Select.tsx"
 import { Field } from "~/components/ui/field.tsx"
-import { REAL_ESTATE_TYPE, REAL_ESTATE_TYPE_OPTIONS } from "~/shared/constants/constants.ts"
-import { NumberInputField, NumberInputRoot } from "~/components/ui/number-input.tsx"
-import { realEstateSchema, type RealEstateFormType } from "~/pages/publish-ad-page/schemas.ts"
+import { NumberInputField, NumberInputRoot } from "~/components/ui/number-input"
+import { REAL_ESTATE_TYPE, REAL_ESTATE_TYPE_OPTIONS } from "~/shared/constants/constants"
+import { realEstateSchema, type RealEstateFormType } from "~/pages/publish-ad-page/schemas"
 
 type RealEstateFormProps = {
 	onSubmit: (data: RealEstateFormType) => void
+	isSubmitting?: boolean
 }
 
 const realEstateDefaultValue: RealEstateFormType = {
@@ -20,7 +21,7 @@ const realEstateDefaultValue: RealEstateFormType = {
 }
 
 export function RealEstateForm(props: RealEstateFormProps) {
-	const { onSubmit } = props
+	const { onSubmit, isSubmitting } = props
 	const {
 		register,
 		handleSubmit,
@@ -68,7 +69,7 @@ export function RealEstateForm(props: RealEstateFormProps) {
 					</NumberInputRoot>
 				</Field>
 			</Stack>
-			<Button mt={"1rem"} mx={"auto"} type="submit">
+			<Button loading={isSubmitting} loadingText="Отправляем..." spinnerPlacement="start" mt={"1rem"} mx={"auto"} type="submit">
 				Отправить
 			</Button>
 		</form>

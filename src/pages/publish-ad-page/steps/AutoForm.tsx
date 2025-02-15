@@ -4,12 +4,13 @@ import { Button, Input, Stack } from "@chakra-ui/react"
 
 import { Select } from "~/shared/ui"
 import { Field } from "~/components/ui/field.tsx"
-import { CAR_BRAND, CAR_BRAND_OPTIONS } from "~/shared/constants/constants.ts"
-import { autoSchema, type AutoFormType } from "~/pages/publish-ad-page/schemas.ts"
-import { NumberInputField, NumberInputRoot } from "~/components/ui/number-input.tsx"
+import { CAR_BRAND, CAR_BRAND_OPTIONS } from "~/shared/constants/constants"
+import { autoSchema, type AutoFormType } from "~/pages/publish-ad-page/schemas"
+import { NumberInputField, NumberInputRoot } from "~/components/ui/number-input"
 
 type AutoFormProps = {
 	onSubmit: (data: AutoFormType) => void
+	isSubmitting?: boolean
 }
 
 const autoDefaultValue: AutoFormType = {
@@ -20,7 +21,7 @@ const autoDefaultValue: AutoFormType = {
 }
 
 export function AutoForm(props: AutoFormProps) {
-	const { onSubmit } = props
+	const { onSubmit, isSubmitting } = props
 	const {
 		register,
 		handleSubmit,
@@ -66,7 +67,7 @@ export function AutoForm(props: AutoFormProps) {
 					</NumberInputRoot>
 				</Field>
 			</Stack>
-			<Button mt={"1rem"} mx={"auto"} type="submit">
+			<Button loading={isSubmitting} loadingText="Отправляем..." spinnerPlacement="start" mt={"1rem"} mx={"auto"} type="submit">
 				Вперед
 			</Button>
 		</form>

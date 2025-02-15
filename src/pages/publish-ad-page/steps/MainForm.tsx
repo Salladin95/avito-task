@@ -4,7 +4,7 @@ import { Button, Input, Stack, Textarea } from "@chakra-ui/react"
 
 import { Field } from "~/components/ui/field.tsx"
 import { FileUpload, Select } from "~/shared/ui"
-import { AD_CATEGORY, AD_CATEGORY_OPTIONS } from "~/shared/constants/constants.ts"
+import { AD_TYPE, AD_CATEGORY_OPTIONS } from "~/shared/constants/constants.ts"
 import { isCorrectType, isFileTooLarge } from "~/pages/publish-ad-page/utils.ts"
 import { mainStepSchema, type MainStepFormType } from "~/pages/publish-ad-page/schemas.ts"
 
@@ -13,7 +13,7 @@ type MainStepFormProps = {
 }
 
 const mainStepDefaultValue: MainStepFormType = {
-	type: [AD_CATEGORY.REAL_ESTATE],
+	type: [AD_TYPE.REAL_ESTATE],
 	description: "",
 	location: "",
 	name: "",
