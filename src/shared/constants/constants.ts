@@ -62,14 +62,14 @@ export const SERVICE_TYPE_LABEL_MAP: Record<ServiceType, string> = {
 
 export const SERVICE_TYPE_OPTIONS = getSelectOptions(SERVICE_TYPE, SERVICE_TYPE_LABEL_MAP)
 
-export const BASE_AD_MAP_LABELS: Record<keyof Omit<BaseAd, "id" | "image">, string> = {
+export const BASE_AD_MAP_LABELS: Record<keyof Omit<BaseAd, "id" | "image" | "userId">, string> = {
 	name: "Название",
 	description: "Описание",
 	location: "Локация",
 	type: "Тип",
 }
 
-export const REAL_ESTATE_MAP_LABELS: Record<keyof Omit<RealEstate, "id" | "image">, string> = {
+export const REAL_ESTATE_MAP_LABELS: Record<keyof Omit<RealEstate, "id" | "image" | "userId">, string> = {
 	...BASE_AD_MAP_LABELS,
 	propertyType: "Тип недвижимости",
 	area: "Площадь",
@@ -77,7 +77,7 @@ export const REAL_ESTATE_MAP_LABELS: Record<keyof Omit<RealEstate, "id" | "image
 	price: "Цена",
 }
 
-export const AUTO_MAP_LABELS: Record<keyof Omit<Car, "id" | "image">, string> = {
+export const AUTO_MAP_LABELS: Record<keyof Omit<Car, "id" | "image" | "userId">, string> = {
 	...BASE_AD_MAP_LABELS,
 	brand: "Марка",
 	model: "Модель",
@@ -85,7 +85,7 @@ export const AUTO_MAP_LABELS: Record<keyof Omit<Car, "id" | "image">, string> = 
 	mileage: "Пробег",
 }
 
-export const SERVICES_MAP_LABELS: Record<keyof Omit<Service, "id" | "image">, string> = {
+export const SERVICES_MAP_LABELS: Record<keyof Omit<Service, "id" | "image" | "userId">, string> = {
 	...BASE_AD_MAP_LABELS,
 	serviceType: "Тип услуги",
 	experience: "Опыт",

@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react"
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+// import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 
 export function QueryProvider(props: PropsWithChildren) {
