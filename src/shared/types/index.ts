@@ -12,6 +12,7 @@ export interface BaseAd {
 	location: string
 	type: string
 	image?: string
+	userId: string
 }
 
 export interface RealEstate extends BaseAd {

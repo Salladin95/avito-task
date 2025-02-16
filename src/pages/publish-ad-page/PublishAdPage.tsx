@@ -16,6 +16,8 @@ import {
 	type ServicesFormType,
 } from "~/features/ad-forms/schemas"
 import { toBase64 } from "~/shared/lib"
+import { useUserId } from "~/shared/context"
+import { useProtectedRoute } from "~/shared/hooks"
 
 const TOAST_DURATION = 3000
 
@@ -47,13 +49,16 @@ export function PublishAdPage() {
 		setStep(1)
 	}
 
+	const userId = useUserId()
+	useProtectedRoute()
+
 	async function handleSecondStepSubmit(formData: PublishAdSecondStepFormType) {
 		if (!mainStepData) return
 		let image: undefined | string = undefined
 		if (mainStepData.image) {
 			image = await toBase64(mainStepData.image[0])
 		}
-		createAd({ ...mainStepData, ...formData, image })
+		createAd({ ...mainStepData, ...formData, userId: userId ?? "", image })
 	}
 
 	function handleRealEstateFormSubmit(data: RealEstateFormType) {

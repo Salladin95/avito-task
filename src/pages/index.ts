@@ -1,5 +1,6 @@
 export * from "./ad-page"
 export * from "./E404.tsx"
 export * from "./home-page"
+export * from "./auth-page"
 export * from "./edit-ad-page"
 export * from "./publish-ad-page"

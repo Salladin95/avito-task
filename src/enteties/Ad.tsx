@@ -1,8 +1,8 @@
+import { Link } from "react-router-dom"
 import { Badge, Box, VStack, Text, Image, Stack, Button } from "@chakra-ui/react"
 
 import { AD } from "~/shared/types"
 import { AD_TYPE, AUTO_MAP_LABELS, REAL_ESTATE_MAP_LABELS, SERVICES_MAP_LABELS } from "~/shared/constants"
-import { Link } from "react-router-dom"
 
 export function Ad(props: AD) {
 	return (

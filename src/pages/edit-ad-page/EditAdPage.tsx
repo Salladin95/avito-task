@@ -1,11 +1,14 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { Container, Heading } from "@chakra-ui/react"
 import { useQueryClient } from "@tanstack/react-query"
 import { toaster, Toaster } from "~/components/ui/toaster"
 
-import { AdForm } from "src/features/ad-forms"
+import { toBase64 } from "~/shared/lib"
 import { LoaderScreen } from "~/shared/ui"
+import { useUserId } from "~/shared/context"
+import { AdForm } from "src/features/ad-forms"
+import { useProtectedRoute } from "~/shared/hooks"
 import { AD_TYPE } from "~/shared/constants/constants"
 import { ADS_QUERY_KEY, useGetAdById } from "~/shared/api"
 import { useEditAdMutation } from "~/pages/edit-ad-page/api"
@@ -16,7 +19,6 @@ import {
 	type PublishAdSecondStepFormType,
 	type ServicesFormType,
 } from "~/features/ad-forms/schemas.ts"
-import { toBase64 } from "~/shared/lib"
 
 const TOAST_DURATION = 3000
 
@@ -45,6 +47,15 @@ export function EditAdPage() {
 		},
 	})
 
+	const userId = useUserId()
+	useProtectedRoute()
+
+	useEffect(() => {
+		if (userId && ad.data?.userId !== userId) {
+			navigate("/")
+		}
+	}, [ad.data?.userId, navigate, userId])
+
 	if (ad.isPending) return <LoaderScreen />
 
 	if (ad.error || !ad.data) {
@@ -65,7 +76,7 @@ export function EditAdPage() {
 		if (mainStepData.image) {
 			image = await toBase64(mainStepData.image[0])
 		}
-		editAd({ ...mainStepData, ...formData, id: Number(id), image })
+		editAd({ ...mainStepData, ...formData, id: Number(id), userId: userId ?? "", image })
 	}
 
 	function handleRealEstateFormSubmit(data: RealEstateFormType) {
