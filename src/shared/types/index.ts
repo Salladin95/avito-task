@@ -36,7 +36,7 @@ export interface Service extends BaseAd {
 	serviceType: ServiceType
 	experience: number
 	cost: number
-	schedule: string
+	schedule?: string
 }
 
 export type AD = RealEstate | Car | Service
