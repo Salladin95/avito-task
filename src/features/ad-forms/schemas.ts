@@ -5,8 +5,7 @@ import {
 	CAR_BRAND,
 	CarBrand,
 	REAL_ESTATE_TYPE,
-	RealEstateType,
-	SERVICE_TYPE,
+	RealEstateType, SERVICE_TYPE,
 	ServiceType,
 } from "~/shared/constants/constants.ts"
 
@@ -25,7 +24,7 @@ export const adFormBaseSchema = z.object({
  * Type for the main step form data.
  */
 export type AdFormBaseSchema = {
-	type: [AdCategoryType]
+	type: AdCategoryType[]
 	description: string
 	location: string
 	name: string
@@ -46,7 +45,7 @@ export const autoSchema = z.object({
  * Type for the auto form data.
  */
 export type AutoFormType = {
-	brand: [CarBrand]
+	brand: CarBrand[]
 	model: string
 	year: number
 	mileage: number
@@ -66,7 +65,7 @@ export const realEstateSchema = z.object({
  * Type for the real estate form data.
  */
 export type RealEstateFormType = {
-	propertyType: [RealEstateType]
+	propertyType: RealEstateType[]
 	area: number
 	rooms: number
 	price: number
@@ -86,10 +85,10 @@ export const servicesSchema = z.object({
  * Type for the services form data.
  */
 export type ServicesFormType = {
-	serviceType: [ServiceType]
+	serviceType: ServiceType[]
 	experience: number
 	cost: number
-	schedule: string
+	schedule?: string
 }
 
 export type PublishAdSecondStepFormType =
@@ -112,7 +111,7 @@ export type PublishAdSecondStepFormType =
 			serviceType: ServiceType
 			experience: number
 			cost: number
-			schedule: string
+			schedule?: string
 	  }
 
 export type FullPublishAdFormType = Omit<AdFormBaseSchema, "type"> & PublishAdSecondStepFormType
