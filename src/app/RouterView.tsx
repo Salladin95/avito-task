@@ -1,8 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 
 import { MainPageLayout } from "~/widgets"
-import { E404, HomePage, PublishAdPage } from "~/pages"
-import { PublishAdFormProvider } from "~/pages/publish-ad-page/publishAdFormContext.tsx"
+import { E404, HomePage, PublishAdPage, EditAdPage, AdPage } from "~/pages"
 
 export function RouterView() {
 	return (
@@ -10,14 +9,9 @@ export function RouterView() {
 			<Routes>
 				<Route path="/" element={<MainPageLayout />}>
 					<Route index element={<HomePage />} />
-					<Route
-						path={"/form"}
-						element={
-							<PublishAdFormProvider>
-								<PublishAdPage />
-							</PublishAdFormProvider>
-						}
-					/>
+					<Route path={"/item/:id"} element={<AdPage />} />
+					<Route path={"/form"} element={<PublishAdPage />} />
+					<Route path={"/form/:id"} element={<EditAdPage />} />
 				</Route>
 				<Route path={"*"} element={<E404 />} />
 			</Routes>

@@ -1,4 +1,20 @@
-import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "~/shared/constants/constants"
+/**
+ * Converts a given size in megabytes (MB) to bytes.
+ *
+ * @param {number} mb - The size in megabytes.
+ * @returns {number} The size in bytes.
+ *
+ * @example
+ * console.log(mbToBytes(1)); // 1048576
+ * console.log(mbToBytes(5)); // 5242880
+ * console.log(mbToBytes(10)); // 10485760
+ */
+function mbToBytes(mb: number): number {
+	return mb * 1024 * 1024
+}
+
+export const MAX_FILE_SIZE = mbToBytes(5)
+export const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"]
 
 /**
  * Checks if the given file is too large.

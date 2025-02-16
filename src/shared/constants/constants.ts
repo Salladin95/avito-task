@@ -1,22 +1,5 @@
 import { getSelectOptions } from "~/shared/lib"
-
-/**
- * Converts a given size in megabytes (MB) to bytes.
- *
- * @param {number} mb - The size in megabytes.
- * @returns {number} The size in bytes.
- *
- * @example
- * console.log(mbToBytes(1)); // 1048576
- * console.log(mbToBytes(5)); // 5242880
- * console.log(mbToBytes(10)); // 10485760
- */
-function mbToBytes(mb: number): number {
-	return mb * 1024 * 1024
-}
-
-export const MAX_FILE_SIZE = mbToBytes(5)
-export const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"]
+import { BaseAd, Car, RealEstate, Service } from "~/shared/types"
 
 export const AD_TYPE = {
 	REAL_ESTATE: "Недвижимость",
@@ -34,9 +17,9 @@ export const AD_TYPE_LABEL_MAP: Record<AdCategoryType, string> = {
 export const AD_CATEGORY_OPTIONS = getSelectOptions(AD_TYPE, AD_TYPE_LABEL_MAP)
 
 export const REAL_ESTATE_TYPE = {
-	APARTMENT: "APARTMENT",
-	HOUSE: "HOUSE",
-	COTTAGE: "COTTAGE",
+	APARTMENT: "Квартира",
+	HOUSE: "Дом",
+	COTTAGE: "Коттедж",
 } as const
 export type RealEstateType = (typeof REAL_ESTATE_TYPE)[keyof typeof REAL_ESTATE_TYPE]
 
@@ -49,10 +32,10 @@ export const REAL_ESTATE_TYPE_LABEL_MAP: Record<RealEstateType, string> = {
 export const REAL_ESTATE_TYPE_OPTIONS = getSelectOptions(REAL_ESTATE_TYPE, REAL_ESTATE_TYPE_LABEL_MAP)
 
 export const CAR_BRAND = {
-	TOYOTA: "TOYOTA",
+	TOYOTA: "Toyota",
 	BMW: "BMW",
-	MERCEDES: "MERCEDES",
-	LADA: "LADA",
+	MERCEDES: "Mercedes",
+	LADA: "Lada",
 } as const
 export type CarBrand = (typeof CAR_BRAND)[keyof typeof CAR_BRAND]
 
@@ -65,9 +48,9 @@ export const CAR_BRAND_LABEL_MAP: Record<CarBrand, string> = {
 export const CAR_BRAND_OPTIONS = getSelectOptions(CAR_BRAND, CAR_BRAND_LABEL_MAP)
 
 export const SERVICE_TYPE = {
-	REPAIR: "REPAIR",
-	CLEANING: "CLEANING",
-	DELIVERY: "DELIVERY",
+	REPAIR: "Ремонт",
+	CLEANING: "Уборка",
+	DELIVERY: "Доставка",
 } as const
 export type ServiceType = (typeof SERVICE_TYPE)[keyof typeof SERVICE_TYPE]
 
@@ -78,3 +61,34 @@ export const SERVICE_TYPE_LABEL_MAP: Record<ServiceType, string> = {
 } as const
 
 export const SERVICE_TYPE_OPTIONS = getSelectOptions(SERVICE_TYPE, SERVICE_TYPE_LABEL_MAP)
+
+export const BASE_AD_MAP_LABELS: Record<keyof Omit<BaseAd, "id" | "image">, string> = {
+	name: "Название",
+	description: "Описание",
+	location: "Локация",
+	type: "Тип",
+}
+
+export const REAL_ESTATE_MAP_LABELS: Record<keyof Omit<RealEstate, "id" | "image">, string> = {
+	...BASE_AD_MAP_LABELS,
+	propertyType: "Тип недвижимости",
+	area: "Площадь",
+	rooms: "Комнат",
+	price: "Цена",
+}
+
+export const AUTO_MAP_LABELS: Record<keyof Omit<Car, "id" | "image">, string> = {
+	...BASE_AD_MAP_LABELS,
+	brand: "Марка",
+	model: "Модель",
+	year: "Год выпуска",
+	mileage: "Пробег",
+}
+
+export const SERVICES_MAP_LABELS: Record<keyof Omit<Service, "id" | "image">, string> = {
+	...BASE_AD_MAP_LABELS,
+	serviceType: "Тип услуги",
+	experience: "Опыт",
+	cost: "Стоимость",
+	schedule: "График",
+}

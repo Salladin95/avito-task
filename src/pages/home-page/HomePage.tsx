@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import { LuSearch } from "react-icons/lu"
 import { ChangeEvent, useMemo, useState } from "react"
-import { Box, Button, Text, Image, Container, Heading, HStack, Spinner, VStack, Input } from "@chakra-ui/react"
+import { Box, Button, Container, Heading, HStack, Input } from "@chakra-ui/react"
 
 import {
 	PaginationItems,
@@ -11,9 +11,10 @@ import {
 } from "~/components/ui/pagination.tsx"
 import { InputGroup } from "~/components/ui/input-group"
 
-import { Select } from "~/shared/ui"
-import { useDebounce } from "~/shared/hooks"
+import { AdPreview } from "~/enteties"
 import { useGetAllAds } from "~/shared/api"
+import { useDebounce } from "~/shared/hooks"
+import { LoaderScreen, Select } from "~/shared/ui"
 import { processAds } from "~/pages/home-page/lib"
 import {
 	AD_CATEGORY_OPTIONS,
@@ -30,9 +31,9 @@ export function HomePage() {
 	const debouncedSearchByName = useDebounce(searchByName)
 
 	const [adTypeFilter, setAdTypeFilter] = useState<string>("")
-	const [realEstateTypeFilter, setRealEstateTypeFilter] = useState<string>("")
 	const [carBrandFilter, setCarBrandFilter] = useState<string>("")
 	const [serviceTypeFilter, setServiceTypeFilter] = useState<string>("")
+	const [realEstateTypeFilter, setRealEstateTypeFilter] = useState<string>("")
 
 	const processedAds = useMemo(
 		() =>
@@ -57,15 +58,7 @@ export function HomePage() {
 		],
 	)
 
-	if (isPending) {
-		return (
-			<Container minHeight="90vh" as="main" display="flex" justifyContent="center" alignItems="center">
-				<Spinner size="lg" />
-			</Container>
-		)
-	}
-
-	if (!processedAds) return null
+	if (isPending) return <LoaderScreen />
 
 	const { ads, totalAds, adsPerPage } = processedAds
 
@@ -92,7 +85,7 @@ export function HomePage() {
 				<Select
 					value={[adTypeFilter]}
 					onValueChange={(e) => handleAdTypeFilterChange(e.value[0])}
-					options={[{ value: "", label: "Выберите категорию" }, ...AD_CATEGORY_OPTIONS]}
+					options={[{ value: "all_types", label: "Все" }, ...AD_CATEGORY_OPTIONS]}
 					placeholder={"Выберите категорию"}
 					label={"Фильтровать по категориям"}
 				/>
@@ -105,8 +98,8 @@ export function HomePage() {
 									onValueChange={(e) => setRealEstateTypeFilter(e.value[0])}
 									options={[
 										{
-											value: "",
-											label: "Выберите тип недвижимости",
+											value: "all_real_estates",
+											label: "Все",
 										},
 										...REAL_ESTATE_TYPE_OPTIONS,
 									]}
@@ -121,8 +114,8 @@ export function HomePage() {
 									onValueChange={(e) => setCarBrandFilter(e.value[0])}
 									options={[
 										{
-											value: "",
-											label: "Выберите марку автомобиля",
+											value: "all_autos",
+											label: "Все",
 										},
 										...CAR_BRAND_OPTIONS,
 									]}
@@ -137,8 +130,8 @@ export function HomePage() {
 									onValueChange={(e) => setServiceTypeFilter(e.value[0])}
 									options={[
 										{
-											value: "",
-											label: "Выберите тип услуг",
+											value: "all_services",
+											label: "Все",
 										},
 										...SERVICE_TYPE_OPTIONS,
 									]}
@@ -160,51 +153,7 @@ export function HomePage() {
 				gap="1rem"
 				gridTemplateColumns={{ base: "1fr", sm: "repeat(2, 1fr)", md: "1fr", xl: "repeat(2, 1fr)" }}
 			>
-				{ads?.map((ad) => (
-					<Box
-						key={ad.id}
-						mb="4"
-						p="4"
-						borderWidth="1px"
-						borderRadius="lg"
-						boxShadow="md"
-						display={"flex"}
-						alignItems={"center"}
-						gap={"1.5rem"}
-						flexDirection={{ base: "column", md: "row" }}
-					>
-						<Image
-							src={ad.image || "https://loremflickr.com/g/320/240/paris"}
-							alt={ad.name}
-							width={"150px"}
-							borderRadius="md"
-							mb="4"
-						/>
-						<VStack align="start">
-							<Heading as="h2" size="md">
-								<Text as={"span"} fontWeight="medium">
-									Название:
-								</Text>{" "}
-								{ad.name}
-							</Heading>
-							<Text>
-								<Text as={"span"} fontWeight="medium">
-									Локация:
-								</Text>{" "}
-								{ad.location}
-							</Text>
-							<Text gap={"4px"} display={"flex"} mb="4">
-								<Text as={"span"} fontWeight="medium">
-									Категория:
-								</Text>
-								<span>{ad.type}</span>
-							</Text>
-						</VStack>
-						<Button ml={{ base: "0", md: "auto" }} variant={"solid"}>
-							<Link to={`/item/${ad.id}`}>Открыть</Link>
-						</Button>
-					</Box>
-				))}
+				{ads?.map((ad) => <AdPreview key={ad.id} {...ad} />)}
 			</Box>
 			<PaginationRoot
 				variant={"subtle"}

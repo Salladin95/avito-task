@@ -2,15 +2,16 @@ import { Button, Stack } from "@chakra-ui/react"
 import { Controller, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
-import { Select } from "~/shared/ui/Select.tsx"
-import { Field } from "~/components/ui/field.tsx"
+import { Select } from "~/shared/ui/Select"
+import { Field } from "~/components/ui/field"
 import { NumberInputField, NumberInputRoot } from "~/components/ui/number-input"
+import { realEstateSchema, type RealEstateFormType } from "~/features/ad-forms/schemas"
 import { REAL_ESTATE_TYPE, REAL_ESTATE_TYPE_OPTIONS } from "~/shared/constants/constants"
-import { realEstateSchema, type RealEstateFormType } from "~/pages/publish-ad-page/schemas"
 
 type RealEstateFormProps = {
 	onSubmit: (data: RealEstateFormType) => void
 	isSubmitting?: boolean
+	defaultValues?: RealEstateFormType
 }
 
 const realEstateDefaultValue: RealEstateFormType = {
@@ -21,7 +22,7 @@ const realEstateDefaultValue: RealEstateFormType = {
 }
 
 export function RealEstateForm(props: RealEstateFormProps) {
-	const { onSubmit, isSubmitting } = props
+	const { onSubmit, isSubmitting, defaultValues = realEstateDefaultValue } = props
 	const {
 		register,
 		handleSubmit,
@@ -29,7 +30,7 @@ export function RealEstateForm(props: RealEstateFormProps) {
 		formState: { errors },
 	} = useForm<RealEstateFormType>({
 		resolver: zodResolver(realEstateSchema),
-		defaultValues: realEstateDefaultValue,
+		defaultValues: defaultValues,
 	})
 
 	return (
@@ -69,7 +70,14 @@ export function RealEstateForm(props: RealEstateFormProps) {
 					</NumberInputRoot>
 				</Field>
 			</Stack>
-			<Button loading={isSubmitting} loadingText="Отправляем..." spinnerPlacement="start" mt={"1rem"} mx={"auto"} type="submit">
+			<Button
+				loading={isSubmitting}
+				loadingText="Отправляем..."
+				spinnerPlacement="start"
+				mt={"1rem"}
+				mx={"auto"}
+				type="submit"
+			>
 				Отправить
 			</Button>
 		</form>

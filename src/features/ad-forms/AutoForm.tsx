@@ -3,14 +3,15 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, Input, Stack } from "@chakra-ui/react"
 
 import { Select } from "~/shared/ui"
-import { Field } from "~/components/ui/field.tsx"
+import { Field } from "~/components/ui/field"
 import { CAR_BRAND, CAR_BRAND_OPTIONS } from "~/shared/constants/constants"
-import { autoSchema, type AutoFormType } from "~/pages/publish-ad-page/schemas"
+import { autoSchema, type AutoFormType } from "~/features/ad-forms/schemas"
 import { NumberInputField, NumberInputRoot } from "~/components/ui/number-input"
 
 type AutoFormProps = {
 	onSubmit: (data: AutoFormType) => void
 	isSubmitting?: boolean
+	defaultValues?: AutoFormType
 }
 
 const autoDefaultValue: AutoFormType = {
@@ -21,7 +22,7 @@ const autoDefaultValue: AutoFormType = {
 }
 
 export function AutoForm(props: AutoFormProps) {
-	const { onSubmit, isSubmitting } = props
+	const { onSubmit, isSubmitting, defaultValues = autoDefaultValue } = props
 	const {
 		register,
 		handleSubmit,
@@ -29,7 +30,7 @@ export function AutoForm(props: AutoFormProps) {
 		control,
 	} = useForm<AutoFormType>({
 		resolver: zodResolver(autoSchema),
-		defaultValues: autoDefaultValue,
+		defaultValues: defaultValues,
 	})
 
 	return (
@@ -68,7 +69,7 @@ export function AutoForm(props: AutoFormProps) {
 				</Field>
 			</Stack>
 			<Button loading={isSubmitting} loadingText="Отправляем..." spinnerPlacement="start" mt={"1rem"} mx={"auto"} type="submit">
-				Вперед
+				Отправить
 			</Button>
 		</form>
 	)

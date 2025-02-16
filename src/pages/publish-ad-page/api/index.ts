@@ -3,13 +3,7 @@ import { useMutation, UseMutationOptions } from "@tanstack/react-query"
 
 import axios from "~/app/axios.ts"
 import { AD } from "~/shared/types"
-import { FullPublishAdFormType } from "~/pages/publish-ad-page/schemas.ts"
-
-export async function getAllAds(): Promise<AD[]> {
-	const res = await axios.get("items")
-	console.log(res)
-	return res.data
-}
+import { FullPublishAdFormType } from "~/features/ad-forms/schemas.ts"
 
 export async function createAd(payload: FullPublishAdFormType): Promise<AD> {
 	const res = await axios.post<AD>("items", payload)

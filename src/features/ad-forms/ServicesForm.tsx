@@ -6,11 +6,12 @@ import { Select } from "~/shared/ui"
 import { Field } from "~/components/ui/field.tsx"
 import { NumberInputField, NumberInputRoot } from "~/components/ui/number-input"
 import { SERVICE_TYPE, SERVICE_TYPE_OPTIONS } from "~/shared/constants/constants"
-import { servicesSchema, type ServicesFormType } from "~/pages/publish-ad-page/schemas"
+import { servicesSchema, type ServicesFormType } from "~/features/ad-forms/schemas"
 
 type ServicesFormProps = {
 	onSubmit: (data: ServicesFormType) => void
 	isSubmitting?: boolean
+	defaultValues?: ServicesFormType
 }
 
 const servicesDefaultValue: ServicesFormType = {
@@ -21,7 +22,7 @@ const servicesDefaultValue: ServicesFormType = {
 }
 
 export function ServicesForm(props: ServicesFormProps) {
-	const { onSubmit, isSubmitting } = props
+	const { onSubmit, isSubmitting, defaultValues = servicesDefaultValue } = props
 	const {
 		register,
 		handleSubmit,
@@ -29,7 +30,7 @@ export function ServicesForm(props: ServicesFormProps) {
 		control,
 	} = useForm<ServicesFormType>({
 		resolver: zodResolver(servicesSchema),
-		defaultValues: servicesDefaultValue,
+		defaultValues: defaultValues,
 	})
 
 	return (
@@ -67,8 +68,15 @@ export function ServicesForm(props: ServicesFormProps) {
 					<Input {...register("schedule")} placeholder="Введите расписание..." />
 				</Field>
 			</Stack>
-			<Button loading={isSubmitting} loadingText="Отправляем..." spinnerPlacement="start" mt={"1rem"} mx={"auto"} type="submit">
-				Вперед
+			<Button
+				loading={isSubmitting}
+				loadingText="Отправляем..."
+				spinnerPlacement="start"
+				mt={"1rem"}
+				mx={"auto"}
+				type="submit"
+			>
+				Отправить
 			</Button>
 		</form>
 	)

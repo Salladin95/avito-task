@@ -5,7 +5,7 @@ export type SelectOption = {
 	value: string
 }
 
-interface BaseAd {
+export interface BaseAd {
 	id: number
 	name: string
 	description: string
@@ -14,7 +14,7 @@ interface BaseAd {
 	image?: string
 }
 
-interface RealEstate extends BaseAd {
+export interface RealEstate extends BaseAd {
 	type: typeof AD_TYPE.REAL_ESTATE
 	propertyType: RealEstateType
 	area: number
@@ -22,7 +22,7 @@ interface RealEstate extends BaseAd {
 	price: number
 }
 
-interface Car extends BaseAd {
+export interface Car extends BaseAd {
 	type: typeof AD_TYPE.AUTO
 	brand: CarBrand
 	year: number
@@ -30,7 +30,7 @@ interface Car extends BaseAd {
 	model: string
 }
 
-interface Service extends BaseAd {
+export interface Service extends BaseAd {
 	type: typeof AD_TYPE.SERVICES
 	serviceType: ServiceType
 	experience: number

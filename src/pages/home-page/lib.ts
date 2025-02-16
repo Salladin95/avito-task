@@ -67,7 +67,6 @@ type ProcessedAds = { ads: AD[]; totalAds: number; adsPerPage: number }
  * @param {number} [limit=ADS_LIMIT] - Number of ads per page.
  */
 export function paginateAds(ads: AD[], page: number, limit = ADS_LIMIT): ProcessedAds {
-	console.log("paginateAds")
 	if (!ads || !ads.length) return { ads: [], totalAds: 0, adsPerPage: 0 }
 	const startIndex = (page - 1) * limit
 	const endIndex = page * limit

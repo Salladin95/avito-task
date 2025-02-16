@@ -1,10 +1,19 @@
 import * as z from "zod"
-import { AD_TYPE, CAR_BRAND, REAL_ESTATE_TYPE, SERVICE_TYPE } from "~/shared/constants/constants.ts"
+import {
+	AD_TYPE,
+	AdCategoryType,
+	CAR_BRAND,
+	CarBrand,
+	REAL_ESTATE_TYPE,
+	RealEstateType,
+	SERVICE_TYPE,
+	ServiceType,
+} from "~/shared/constants/constants.ts"
 
 /**
  * Schema for the main step of the form.
  */
-export const mainStepSchema = z.object({
+export const adFormBaseSchema = z.object({
 	name: z.string().min(1, "Название обязательно"),
 	description: z.string().min(1, "Описание обязательно"),
 	location: z.string().min(1, "Локация обязательна"),
@@ -15,7 +24,13 @@ export const mainStepSchema = z.object({
 /**
  * Type for the main step form data.
  */
-export type MainStepFormType = z.infer<typeof mainStepSchema>
+export type AdFormBaseSchema = {
+	type: [AdCategoryType]
+	description: string
+	location: string
+	name: string
+	image?: any
+}
 
 /**
  * Schema for the auto type step.
@@ -30,7 +45,12 @@ export const autoSchema = z.object({
 /**
  * Type for the auto form data.
  */
-export type AutoFormType = z.infer<typeof autoSchema>
+export type AutoFormType = {
+	brand: [CarBrand]
+	model: string
+	year: number
+	mileage: number
+}
 
 /**
  * Schema for the real estate type step.
@@ -45,7 +65,12 @@ export const realEstateSchema = z.object({
 /**
  * Type for the real estate form data.
  */
-export type RealEstateFormType = z.infer<typeof realEstateSchema>
+export type RealEstateFormType = {
+	propertyType: [RealEstateType]
+	area: number
+	rooms: number
+	price: number
+}
 
 /**
  * Schema for the services type step.
@@ -60,29 +85,34 @@ export const servicesSchema = z.object({
 /**
  * Type for the services form data.
  */
-export type ServicesFormType = z.infer<typeof servicesSchema>
+export type ServicesFormType = {
+	serviceType: [ServiceType]
+	experience: number
+	cost: number
+	schedule: string
+}
 
 export type PublishAdSecondStepFormType =
 	| {
 			type: typeof AD_TYPE.REAL_ESTATE
-			propertyType: string
+			propertyType: RealEstateType
 			area: number
 			rooms: number
 			price: number
 	  }
 	| {
 			type: typeof AD_TYPE.AUTO
-			brand: string
+			brand: CarBrand
 			model: string
 			year: number
-			mileage?: number
+			mileage: number
 	  }
 	| {
 			type: typeof AD_TYPE.SERVICES
-			serviceType: string
+			serviceType: ServiceType
 			experience: number
 			cost: number
-			schedule?: string
+			schedule: string
 	  }
 
-export type FullPublishAdFormType = Omit<MainStepFormType, "type"> & PublishAdSecondStepFormType
+export type FullPublishAdFormType = Omit<AdFormBaseSchema, "type"> & PublishAdSecondStepFormType

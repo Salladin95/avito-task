@@ -2,33 +2,34 @@ import { Controller, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, Input, Stack, Textarea } from "@chakra-ui/react"
 
-import { Field } from "~/components/ui/field.tsx"
+import { Field } from "~/components/ui/field"
 import { FileUpload, Select } from "~/shared/ui"
-import { AD_TYPE, AD_CATEGORY_OPTIONS } from "~/shared/constants/constants.ts"
-import { isCorrectType, isFileTooLarge } from "~/pages/publish-ad-page/utils.ts"
-import { mainStepSchema, type MainStepFormType } from "~/pages/publish-ad-page/schemas.ts"
+import { AD_TYPE, AD_CATEGORY_OPTIONS } from "~/shared/constants/constants"
+import { isCorrectType, isFileTooLarge } from "~/features/ad-forms/utils"
+import { adFormBaseSchema, type AdFormBaseSchema } from "~/features/ad-forms/schemas"
 
 type MainStepFormProps = {
-	onSubmit: (data: MainStepFormType) => void
+	onSubmit: (data: AdFormBaseSchema) => void
+	defaultValues?: AdFormBaseSchema
 }
 
-const mainStepDefaultValue: MainStepFormType = {
+const mainStepDefaultValue: AdFormBaseSchema = {
 	type: [AD_TYPE.REAL_ESTATE],
 	description: "",
 	location: "",
 	name: "",
 }
 
-export function MainStepForm(props: MainStepFormProps) {
-	const { onSubmit } = props
+export function AdBaseForm(props: MainStepFormProps) {
+	const { onSubmit, defaultValues = mainStepDefaultValue } = props
 	const {
 		register,
 		handleSubmit,
 		control,
 		formState: { errors },
-	} = useForm<MainStepFormType>({
-		resolver: zodResolver(mainStepSchema),
-		defaultValues: mainStepDefaultValue,
+	} = useForm<AdFormBaseSchema>({
+		resolver: zodResolver(adFormBaseSchema),
+		defaultValues: defaultValues,
 	})
 
 	return (

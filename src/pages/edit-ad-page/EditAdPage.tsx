@@ -1,32 +1,35 @@
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { Container, Heading } from "@chakra-ui/react"
 import { useQueryClient } from "@tanstack/react-query"
 import { toaster, Toaster } from "~/components/ui/toaster"
 
-import { ADS_QUERY_KEY } from "~/shared/api"
 import { AdForm } from "src/features/ad-forms"
+import { LoaderScreen } from "~/shared/ui"
 import { AD_TYPE } from "~/shared/constants/constants"
-import { useCreateAdMutation } from "~/pages/publish-ad-page/api"
+import { ADS_QUERY_KEY, useGetAdById } from "~/shared/api"
+import { useEditAdMutation } from "~/pages/edit-ad-page/api"
 import {
 	type AutoFormType,
 	type AdFormBaseSchema,
 	type RealEstateFormType,
 	type PublishAdSecondStepFormType,
 	type ServicesFormType,
-} from "~/features/ad-forms/schemas"
+} from "~/features/ad-forms/schemas.ts"
 
 const TOAST_DURATION = 3000
 
-export function PublishAdPage() {
+export function EditAdPage() {
 	const navigate = useNavigate()
 	const queryClient = useQueryClient()
 
+	const { id } = useParams()
+	const ad = useGetAdById(Number(id), { enabled: Boolean(id) })
+
 	const [step, setStep] = useState<0 | 1>(0)
 	const [mainStepData, setMainStep] = useState<AdFormBaseSchema | null>(null)
-	const type = mainStepData?.type.length ? mainStepData?.type[0] : null
 
-	const { mutate: createAd } = useCreateAdMutation({
+	const { mutate: createAd } = useEditAdMutation({
 		onError: (err) => {
 			toaster.create({
 				title: "Failure",
@@ -41,6 +44,15 @@ export function PublishAdPage() {
 		},
 	})
 
+	if (ad.isPending) return <LoaderScreen />
+
+	if (ad.error || !ad.data) {
+		navigate("/e404")
+		return null
+	}
+
+	const type = mainStepData?.type.length ? mainStepData?.type[0] : ad.data.type
+
 	function handleMainStepSubmit(data: AdFormBaseSchema) {
 		setMainStep(data)
 		setStep(1)
@@ -48,7 +60,7 @@ export function PublishAdPage() {
 
 	function handleSecondStepSubmit(formData: PublishAdSecondStepFormType) {
 		if (!mainStepData) return
-		createAd({ ...mainStepData, ...formData })
+		createAd({ ...mainStepData, ...formData, id: Number(id) })
 	}
 
 	function handleRealEstateFormSubmit(data: RealEstateFormType) {
@@ -78,7 +90,7 @@ export function PublishAdPage() {
 	return (
 		<Container as={"main"} mx={"auto"} pt={"2rem"}>
 			<Heading fontSize={"3rem"} mb={"3rem"} textAlign={"center"} size="2xl">
-				Создание объявления
+				Редактирование объявления
 			</Heading>
 			<AdForm
 				onMainStepSubmit={handleMainStepSubmit}
@@ -87,6 +99,7 @@ export function PublishAdPage() {
 				onServicesFormSubmit={handleServicesFormSubmit}
 				step={step}
 				adType={type}
+				ad={ad.data}
 			/>
 			<Toaster />
 		</Container>
