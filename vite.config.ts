@@ -13,5 +13,9 @@ export default defineConfig({
 			"~": pathSrc,
 		},
 	},
+	preview: {
+		host: true,
+		port: 8080,
+	},
 	base: "/avito-task/",
 })

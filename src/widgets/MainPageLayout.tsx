@@ -1,25 +1,31 @@
-import { Link, Outlet, useNavigate } from "react-router-dom"
+import { useEffect } from "react"
 import { Button, Container, HStack } from "@chakra-ui/react"
-
-import { useSupabase, useUserId } from "~/shared/context"
+import { Link, Outlet, useNavigate, useLocation } from "react-router-dom"
+import { useAuth } from "~/shared/context/auth.tsx"
 
 export function MainPageLayout() {
-	const userId = useUserId()
-	const supabase = useSupabase()
+	const { loggedUser: user, logout } = useAuth()
+	const location = useLocation()
 	const navigate = useNavigate()
 
+	useEffect(() => {
+		if (location.pathname === "/") {
+			navigate("/list", { replace: true }) // Redirect to "/list"
+		}
+	}, [location.pathname, navigate])
+
 	function handleSignOut() {
-		supabase?.auth.signOut()
+		logout()
 		navigate("/")
 	}
 
 	return (
 		<>
-			<Container display={"flex"} mb={"2rem"} py={"1rem"} as={"header"}>
+			<Container display={"flex"} mx={"auto"} mb={"2rem"} py={"1rem"} as={"header"}>
 				<Button variant={"ghost"}>
 					<Link to={"/"}>Home</Link>
 				</Button>
-				{!userId && (
+				{!user && (
 					<HStack gap={"1.5rem"} display={"flex"} alignItems={"center"} ml={"auto"}>
 						<Button variant={"ghost"}>
 							<Link to={"/sign-in"}>Войти</Link>
@@ -29,7 +35,7 @@ export function MainPageLayout() {
 						</Button>
 					</HStack>
 				)}
-				{userId && (
+				{user && (
 					<Button ml={"auto"} onClick={handleSignOut} variant={"ghost"}>
 						Выйти
 					</Button>

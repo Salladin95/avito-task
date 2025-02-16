@@ -1,1 +1,2 @@
-export * from "./SignInPage.tsx";
+export * from "./SignInPage"
+export * from "./SignUpPage"

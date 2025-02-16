@@ -6,7 +6,6 @@ import { toaster, Toaster } from "~/components/ui/toaster"
 
 import { toBase64 } from "~/shared/lib"
 import { LoaderScreen } from "~/shared/ui"
-import { useUserId } from "~/shared/context"
 import { AdForm } from "src/features/ad-forms"
 import { useProtectedRoute } from "~/shared/hooks"
 import { AD_TYPE } from "~/shared/constants/constants"
@@ -19,6 +18,7 @@ import {
 	type PublishAdSecondStepFormType,
 	type ServicesFormType,
 } from "~/features/ad-forms/schemas.ts"
+import {useAuth} from "~/shared/context/auth.tsx";
 
 const TOAST_DURATION = 3000
 
@@ -47,7 +47,7 @@ export function EditAdPage() {
 		},
 	})
 
-	const userId = useUserId()
+	const { loggedUser: userId } = useAuth()
 	useProtectedRoute()
 
 	useEffect(() => {

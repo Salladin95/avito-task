@@ -1,63 +1,33 @@
-import { useForm } from "react-hook-form"
-import { Button, Container, Input, Stack } from "@chakra-ui/react"
-
-import { Field } from "~/components/ui/field"
-import { toaster, Toaster } from "~/components/ui/toaster"
-import { useSession, useSupabase } from "~/shared/context"
-import { PasswordInput } from "~/components/ui/password-input"
+import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
-interface FormValues {
-	email: string
-	password: string
-}
+import { toaster } from "~/components/ui/toaster"
+import { AuthForm, type AuthFormType } from "~/pages/auth-page/AuthForm"
+import { errorToMessage } from "~/shared/lib"
+import { useAuth } from "~/shared/context/auth.tsx"
 
 export function SignUpPage() {
-	const supabase = useSupabase()
-	const session = useSession()
-	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-	} = useForm<FormValues>()
-
 	const navigate = useNavigate()
+	const { loggedUser: user, register: createUser } = useAuth()
 
-	const onSubmit = handleSubmit(async (formData) => {
-		const { error } = await supabase.auth.signUp({
-			email: formData.email,
-			password: formData.password,
-		})
-
-		if (error) {
+	const handleSubmit = async (user: AuthFormType) => {
+		try {
+			createUser(user)
+			navigate("/")
+		} catch (e) {
 			toaster.create({
-				description: error.message,
+				description: errorToMessage(e),
 				type: "error",
 				title: "Error",
 			})
 		}
-	})
-
-	if (session) {
-		navigate("/")
 	}
 
-	return (
-		<Container as={"main"} mx={"auto"}>
-			<form onSubmit={onSubmit}>
-				<Stack gap="4" align="flex-start" mx={"auto"} maxW="sm">
-					<Field label="Email" invalid={!!errors.email} errorText={errors.email?.message}>
-						<Input {...register("email", { required: "Email is required" })} />
-					</Field>
+	useEffect(() => {
+		if (user) {
+			navigate("/")
+		}
+	}, [])
 
-					<Field label="Password" invalid={!!errors.password} errorText={errors.password?.message}>
-						<PasswordInput {...register("password", { required: "Password is required", min: 6 })} />
-					</Field>
-
-					<Button type="submit">Submit</Button>
-				</Stack>
-			</form>
-			<Toaster />
-		</Container>
-	)
+	return <AuthForm onSubmit={handleSubmit} />
 }

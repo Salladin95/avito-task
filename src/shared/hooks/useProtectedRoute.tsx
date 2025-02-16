@@ -1,15 +1,13 @@
-import { useSupabase } from "~/shared/context"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import { useAuth } from "~/shared/context/auth.tsx"
 
 export function useProtectedRoute() {
-	const supabase = useSupabase()
 	const navigate = useNavigate()
+	const { loggedUser: user } = useAuth()
 	useEffect(() => {
-		supabase.auth.getSession().then(({ data: { session } }) => {
-			if (!session) {
-				navigate("/sign-in")
-			}
-		})
-	}, [navigate, supabase])
+		if (!user) {
+			navigate("/sign-in")
+		}
+	}, [navigate, user])
 }

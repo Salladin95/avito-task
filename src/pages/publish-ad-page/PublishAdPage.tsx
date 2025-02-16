@@ -16,8 +16,8 @@ import {
 	type ServicesFormType,
 } from "~/features/ad-forms/schemas"
 import { toBase64 } from "~/shared/lib"
-import { useUserId } from "~/shared/context"
 import { useProtectedRoute } from "~/shared/hooks"
+import {useAuth} from "~/shared/context/auth.tsx";
 
 const TOAST_DURATION = 3000
 
@@ -49,7 +49,7 @@ export function PublishAdPage() {
 		setStep(1)
 	}
 
-	const userId = useUserId()
+	const { loggedUser: userId } = useAuth()
 	useProtectedRoute()
 
 	async function handleSecondStepSubmit(formData: PublishAdSecondStepFormType) {
