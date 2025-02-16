@@ -1,5 +1,6 @@
 import axios, { InternalAxiosRequestConfig } from "axios"
-import { APP_CONFIG } from "~/app/appConfig.ts"
+
+import { APP_CONFIG } from "~/app/appConfig"
 
 /**
  * Core axios instance

@@ -15,6 +15,7 @@ import {
 	type PublishAdSecondStepFormType,
 	type ServicesFormType,
 } from "~/features/ad-forms/schemas"
+import { toBase64 } from "~/shared/lib"
 
 const TOAST_DURATION = 3000
 
@@ -46,9 +47,13 @@ export function PublishAdPage() {
 		setStep(1)
 	}
 
-	function handleSecondStepSubmit(formData: PublishAdSecondStepFormType) {
+	async function handleSecondStepSubmit(formData: PublishAdSecondStepFormType) {
 		if (!mainStepData) return
-		createAd({ ...mainStepData, ...formData })
+		let image: undefined | string = undefined
+		if (mainStepData.image) {
+			image = await toBase64(mainStepData.image[0])
+		}
+		createAd({ ...mainStepData, ...formData, image })
 	}
 
 	function handleRealEstateFormSubmit(data: RealEstateFormType) {

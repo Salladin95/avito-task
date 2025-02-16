@@ -23,7 +23,6 @@ export function getAdFormData(ad?: AD):
 		description: ad.description,
 		location: ad.location,
 		type: [ad.type],
-		image: ad.image,
 	}
 
 	let second: RealEstateFormType | ServicesFormType | AutoFormType

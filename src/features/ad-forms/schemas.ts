@@ -29,7 +29,7 @@ export type AdFormBaseSchema = {
 	description: string
 	location: string
 	name: string
-	image?: any
+	image?: FileList
 }
 
 /**

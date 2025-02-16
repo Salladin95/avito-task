@@ -16,6 +16,7 @@ import {
 	type PublishAdSecondStepFormType,
 	type ServicesFormType,
 } from "~/features/ad-forms/schemas.ts"
+import { toBase64 } from "~/shared/lib"
 
 const TOAST_DURATION = 3000
 
@@ -29,7 +30,7 @@ export function EditAdPage() {
 	const [step, setStep] = useState<0 | 1>(0)
 	const [mainStepData, setMainStep] = useState<AdFormBaseSchema | null>(null)
 
-	const { mutate: createAd } = useEditAdMutation({
+	const { mutate: editAd } = useEditAdMutation({
 		onError: (err) => {
 			toaster.create({
 				title: "Failure",
@@ -58,9 +59,13 @@ export function EditAdPage() {
 		setStep(1)
 	}
 
-	function handleSecondStepSubmit(formData: PublishAdSecondStepFormType) {
+	async function handleSecondStepSubmit(formData: PublishAdSecondStepFormType) {
 		if (!mainStepData) return
-		createAd({ ...mainStepData, ...formData, id: Number(id) })
+		let image: undefined | string = undefined
+		if (mainStepData.image) {
+			image = await toBase64(mainStepData.image[0])
+		}
+		editAd({ ...mainStepData, ...formData, id: Number(id), image })
 	}
 
 	function handleRealEstateFormSubmit(data: RealEstateFormType) {
